@@ -28,3 +28,23 @@
 - Automated API test suite.
 - Frontend UI components, styles, state management, and API integration.
 - End-to-end verification.
+
+## 2026-10-08 — Removing Generated Dependencies From Git History
+
+**Request**
+- Resolve GitHub rejecting the initial push because a generated MongoDB binary under `node_modules` exceeded the file-size limit.
+
+**Changes**
+- `.gitignore` — Added rules for `node_modules/`, macOS metadata, and environment files.
+- Git index — Removed tracked `node_modules/` and `.DS_Store` from the amended initial commit while preserving the local dependency installation.
+
+**Decisions**
+- Kept `package.json` and `package-lock.json` tracked so dependencies can be restored with `npm install`.
+
+**Verification**
+- Tracked `node_modules` files — PASS; 0.
+- Tracked blobs over 100 MB — PASS; none.
+- `npm test` — PASS; 18 tests passed.
+
+**Remaining**
+- Push the amended `main` branch after tests pass.
